@@ -1,0 +1,43 @@
+version: '3'
+services:
+  express:
+    build: ./docker/express/Dockerfile 
+    container_name: express_container
+    tty: true
+    ports:
+     - 3001:3001
+    environment:
+      - NODE_ENVIROMENT=DEVEROPMENT
+    volumes:
+      - ./backend/app:/usr/src/app
+      - express-data:/usr/src/app/node_modules
+    command: sh -c 'npm install && npm run dev' 
+  react:
+    build: ./docker/react/Dockerfile
+    container_name: react_contaiter
+    ports:
+     - 3000:3000
+    volumes : 
+      - ./frontend/app:/usr/src/app
+      - react-data:/usr/src/app/node_modules
+    command: sh -c 'npm install && npm start' 
+  mysql:
+    build: ./docker/mysql/Dockerfile
+    container_name: mysql_container
+    platform: linux/x86_64
+    environment:
+      - MYSQL_ROOT_PASSWORD=administrator
+      - TZ=Japan
+    ports:
+      - 3306:3306
+    volumes : 
+      - mysql-data:/var/lib/mysql  # volumeのエントリポイント
+      - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf  # cnfファイル
+      - ./db/mysql/sql/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql # 起動時に実行するsqlファイル
+volumes:
+  mysql-data:
+    name: db-data
+  express-data:
+    name: express-data
+  react-data:
+    name: react-data
