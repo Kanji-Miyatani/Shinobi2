@@ -1,7 +1,9 @@
 version: '3'
 services:
   express:
-    build: ./docker/express/Dockerfile 
+    build: 
+     dockerfile: ./docker/express/Dockerfile
+     context: .
     container_name: express_container
     tty: true
     ports:
@@ -9,20 +11,25 @@ services:
     environment:
       - NODE_ENVIROMENT=DEVEROPMENT
     volumes:
-      - ./backend/app:/usr/src/app
+      - ./backend:/usr/src/app
       - express-data:/usr/src/app/node_modules
     command: sh -c 'npm install && npm run dev' 
   react:
-    build: ./docker/react/Dockerfile
+    build:
+      dockerfile: ./docker/react/Dockerfile
+      context: .
     container_name: react_contaiter
     ports:
      - 3000:3000
     volumes : 
-      - ./frontend/app:/usr/src/app
+      - ./frontend:/usr/src/app
+      - ./log/frontend/npm:/root/.npm/_logs/
       - react-data:/usr/src/app/node_modules
     command: sh -c 'npm install && npm start' 
   mysql:
-    build: ./docker/mysql/Dockerfile
+    build: 
+      dockerfile: ./docker/mysql/Dockerfile
+      context: .
     container_name: mysql_container
     platform: linux/x86_64
     environment:

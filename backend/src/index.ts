@@ -1,14 +1,13 @@
 import express, { Application, Request, Response }  from "express";
 
 const app:Application = express();
-const PORT = 3000;
+const PORT = 3001;
 
-app.use(express.json);
 
 app.get('/',(req:Request,res : Response)=>{
-    "おはよう、皆さん"
+    res.send( "おはようございます。");
 });
 
 app.listen(PORT,()=>{
-    console.log("サーバー起動！")
+    console.log(`ポート：${PORT}でサーバー起動！`)
 })

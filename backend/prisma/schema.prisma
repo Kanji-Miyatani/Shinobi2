@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//ユーザーモデル
+model User {
+  id  Int @id @default(autoincrement())
+  ///メールアドレス
+  mailaddress String @db.VarChar(50)
+  ///名前
+  name String @db.VarChar(10)
+  ///ユーザーのログイン権限
+  level AccountLevel @default(Anonymous)
+  ///ユーザー作成日
+  created_at DateTime
+  
+  ///選択キャラクター
+  characterId String 
+  selectedCharacter Character  @relation(fields: [characterId], references: [id])
+
+  chats Chat[]
+}
+//部屋
+model Room {
+  id  String @id 
+  name String  @db.VarChar(15)
+  ///ユーザーによる作成かどうか
+  isUserCreated Boolean 
+  ///使用可能なRoomかどうか
+  isActive Boolean
+  createdAt DateTime @default(now())
+  chats Chat[]
+}
+
+//発言
+model Chat {
+  id  Int @id @default(autoincrement())
+  name String 
+  createdAt DateTime @default(now())
+  userId Int
+  user User? @relation(fields: [userId], references: [id])
+  roomId String
+  room Room? @relation(fields: [roomId], references: [id])
+}
+///キャラクター
+model Character{
+  id String @id 
+  name String
+  imgCode String
+  usingUsers User[]
+}
+
+enum AccountLevel {
+  VIP 
+  Anonymous
+  Admin
+}
