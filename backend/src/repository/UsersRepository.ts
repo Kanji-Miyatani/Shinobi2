@@ -6,10 +6,13 @@ export const selectAll=async () : Promise<User[]>=>{
     return allUsers;
 }
 
-export const selectOne=async (id : Number) : Promise<User[]>=>{
-    const allUsers = await prisma.user.findMany({
+export const selectOne=async (email : string | undefined) : Promise<User | null>=>{
+    const user = await prisma.user.findFirst({
+        where:{
+            mailaddress : email, 
+        }
     })
-    return allUsers;
+    return user;
 }
 
 export  const create=async (user:User)=>{
