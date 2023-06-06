@@ -2,6 +2,7 @@ import {Router,Response,Request} from 'express'
 import {jwtHelper,MyJwtPayload} from '../services/jwtService'
 import * as roomRepo from '../repository/roomsRepository';
 import * as usersRepo from '../repository/usersRepository';
+import asyncWrapper from '../services/asyncWrapper';
 const router = Router();
 //=======================================
 //全部屋取得
@@ -19,7 +20,7 @@ router.get('/all',(req:Request,res:Response)=>{
 //=======================================
 //入室
 //=======================================
-router.post('/entry',async (req:Request,res:Response)=>{
+router.post('/entry',asyncWrapper(async (req:Request,res:Response)=>{
   //認証
   const token=req.cookies.jwtToken;
   const resultObj =jwtHelper.verifyToken(token);
@@ -36,5 +37,5 @@ router.post('/entry',async (req:Request,res:Response)=>{
   await usersRepo.updateRoom(userClaim.id,selectedRoomId);
   //入室時初回データを送信
   res.json(roomRepo.selectOne(selectedRoomId));
-})
+}))
 export default router;

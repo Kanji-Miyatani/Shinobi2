@@ -1,5 +1,4 @@
 import {Room,PrismaClient} from '@prisma/client'
-import { count } from 'console';
 const prisma = new PrismaClient();
 export const selectAll=async () : Promise<Room[]>=>{
     const allRooms = await prisma.room.findMany({

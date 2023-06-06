@@ -38,9 +38,9 @@ model Room {
   id  String @id 
   name String  @db.VarChar(15)
   ///ユーザーによる作成かどうか
-  isUserCreated Boolean 
+  isUserCreated Boolean @default(true)
   ///使用可能なRoomかどうか
-  isActive Boolean
+  isActive Boolean @default(true)
   ///最大人数
   maximum Int
   createdAt DateTime @default(now())

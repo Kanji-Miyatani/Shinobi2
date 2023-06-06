@@ -1,6 +1,5 @@
 import {Router,Request,Response,NextFunction}from 'express'
 import * as usersRepo from '../repository/usersRepository'
-import {jwtHelper} from '../services/jwtService'
 import * as bcrypt from 'bcrypt';
 import asyncWrapper from '../services/asyncWrapper';
 

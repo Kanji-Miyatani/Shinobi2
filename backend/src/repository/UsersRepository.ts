@@ -33,7 +33,7 @@ export const create=async (
     })
 }
 // 部屋更新
-export const updateRoom=async (userId:number,roomId:string)=>{
+export const updateRoom=async (userId:number,roomId:string |null)=>{
     await prisma.user.update({
         where:{
             id : userId
