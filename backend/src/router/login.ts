@@ -5,23 +5,41 @@ import * as bcrypt from 'bcrypt';
 import * as dateService from '../services/dateService'
 
 const router = Router();
-
+//=======================================
+//ログイン処理
+//=======================================
 router.post("/",async (req:Request,res:Response)=>{
+    //ユーザー取得
    const user =await usersRepo.selectOne(req.body.email);
    if(user===null){
-     throw new Error("NO_USER");
+     res.json({
+        message:'ユーザーが見つかりません。'
+     });
+     return;
    }
+
    const inputedPass = req.body.password;
+   //
    const match = await bcrypt.compare(inputedPass,user.password);
    if(match){
-    const jwtToken = jwtHelper.createToken();
+        const jwtToken = jwtHelper.createToken({
+            id:user.id,
+            name:user.name
+        });
         res.cookie("jwtToken", jwtToken, {
             //webサーバーのみがアクセス可能
             httpOnly: true,
             //cookieの有効期限は2日間に設定
             expires: dateService.getDaysLater(7),
         }).json({
-            
+            id : user.id 
+        })
+   }
+   else{
+        res.json({
+            message:"パスワードが違います。"
         })
    }
 })
+
+export default router;

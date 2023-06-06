@@ -22,11 +22,14 @@ model User {
   ///ユーザーのログイン権限
   level AccountLevel @default(Anonymous)
   ///ユーザー作成日
-  created_at DateTime
+  created_at DateTime  @default(now())
   
   ///選択キャラクター
-  characterId String 
+  characterId String @default("shinobi")
   selectedCharacter Character  @relation(fields: [characterId], references: [id])
+  //入室部屋
+  roomId String?
+  room Room?  @relation(fields: [roomId], references: [id])
 
   chats Chat[]
 }
@@ -38,8 +41,11 @@ model Room {
   isUserCreated Boolean 
   ///使用可能なRoomかどうか
   isActive Boolean
+  ///最大人数
+  maximum Int
   createdAt DateTime @default(now())
   chats Chat[]
+  users User[]
 }
 
 //発言
