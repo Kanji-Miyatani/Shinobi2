@@ -4,19 +4,25 @@ import {jwtHelper} from '../services/jwtService'
 import * as bcrypt from 'bcrypt';
 import * as dateService from '../services/dateService'
 import asyncWrapper from '../services/asyncWrapper';
-interface Responce{
+//=======================================
+//API Scheme
+//=======================================
+interface LoginApiResponce{
     result:boolean,
-    message:string
+    message:string,
+    id:number|null
 }
 const router = Router();
 //=======================================
 //ログイン処理
 //=======================================
-router.post("/",asyncWrapper(async (req:Request,res:Response)=>{
+router.post("/",asyncWrapper(async (req:Request,res:Response<LoginApiResponce>)=>{
     //ユーザー取得
    const user =await usersRepo.selectOne(req.body.email);
    if(user===null){
      res.json({
+        result:false,
+        id:null,
         message:'ユーザーが見つかりません。'
      });
      return;
@@ -36,12 +42,16 @@ router.post("/",asyncWrapper(async (req:Request,res:Response)=>{
             //cookieの有効期限は2日間に設定
             expires: dateService.getDaysLater(7),
         }).json({
-            id : user.id 
+            id : user.id,
+            result : true,
+            message : "login success"
         })
    }
    else{
         res.json({
-            message:"パスワードが違います。"
+            id : null,
+            result : false,
+            message : "パスワードが違います。"
         })
    }
 }))
