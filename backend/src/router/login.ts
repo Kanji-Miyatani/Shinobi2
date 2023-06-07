@@ -55,5 +55,4 @@ router.post("/",asyncWrapper(async (req:Request,res:Response<LoginApiResponce>)=
         })
    }
 }))
-
 export default router;
