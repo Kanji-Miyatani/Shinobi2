@@ -1,19 +1,14 @@
 import { Avatar, 
     Box, 
     Button,
-     Card,
-      Checkbox, 
-      CssBaseline,
-       FormControlLabel, 
-       Grid, 
-       Link, 
-       Paper, 
-       TextField, 
-       ThemeProvider, 
-       Typography, 
-       createTheme, 
-       makeStyles,
-    Theme } from '@mui/material'
+    CssBaseline,
+    Grid, 
+    Link, 
+    Paper, 
+    TextField, 
+    ThemeProvider, 
+    Typography, 
+    createTheme} from '@mui/material'
 import React, { useState } from 'react'
 import CheckIcon from '@mui/icons-material/Check';
 import loginApi,{LoginApiRequest} from '../api/login'
@@ -22,7 +17,7 @@ function Login() {
     const [passInputError, setPassInputError] = useState(false);
     const [emailInputError, setEmailInputError] = useState(false);
     //POST
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const passWord = data.get('email')?.toString();
@@ -33,7 +28,6 @@ function Login() {
         if(email===null || email===undefined){
             setEmailInputError(true);
         }
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
         if(emailInputError || passInputError){
             return;
         }
@@ -41,7 +35,7 @@ function Login() {
             email: email as string,
             password: passWord as string,
         } 
-        loginApi(req);
+        await loginApi(req);
       };
     const defaultTheme = createTheme();
   return (
