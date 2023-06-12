@@ -19,11 +19,12 @@ const router = Router();
 router.post("/",asyncWrapper(async (req:Request,res:Response<LoginApiResponce>)=>{
     //ユーザー取得
    const user =await usersRepo.selectOne(req.body.email);
+   console.log("access")
    if(user===null){
      res.json({
         result:false,
         id:null,
-        message:'ユーザーが見つかりません。'
+        message:'パスワードが違います。'
      });
      return;
    }

@@ -11,31 +11,60 @@ import { Avatar,
     createTheme} from '@mui/material'
 import React, { useState } from 'react'
 import CheckIcon from '@mui/icons-material/Check';
+import { useNavigate } from "react-router-dom";
 import loginApi,{LoginApiRequest} from '../api/login'
+import { ValidationOption, useValidation } from '../services/validationService';
+const validationOptions:ValidationOption[]=[
+    {
+        name:"email",
+        validationMethods:(value)=>{
+            if(value===""){
+                return "入力してください。"
+            }
+            return null;
+        }
+    },
+    {
+        name:"password",
+        validationMethods:(value)=>{
+            if(value===""){
+                return "入力してください。"
+            }
+            return null;
+        }
+    }
+];
 
+/**
+ * ログイン画面
+ * @returns 
+ */
 function Login() {
-    const [passInputError, setPassInputError] = useState(false);
-    const [emailInputError, setEmailInputError] = useState(false);
+    const {formData, handleChanged,handleValidateAll,addError} =useValidation(validationOptions);
+    const navigate = useNavigate();
     //POST
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const passWord = data.get('email')?.toString();
+        const passWord = data.get('password')?.toString();
         const email =data.get('email')?.toString();
-        if(passWord===null || passWord===undefined){
-            setPassInputError(true);
-        }
-        if(email===null || email===undefined){
-            setEmailInputError(true);
-        }
-        if(emailInputError || passInputError){
+        console.log(formData)
+        if(!handleValidateAll()){
             return;
-        }
+        };
         const req :LoginApiRequest ={
             email: email as string,
             password: passWord as string,
         } 
-        await loginApi(req);
+        loginApi(req).then((body)=>{
+            if(body.result){
+                navigate("Rooms");
+            } else{
+                addError("password",body.message);
+            }
+        }).catch(()=>{
+            alert("不明なエラー");
+        });
       };
     const defaultTheme = createTheme();
   return (
@@ -49,7 +78,7 @@ function Login() {
       md={12}
       sx={{
         height: '100vh',
-        backgroundImage: 'url(images/tokyo_ninja_2.jpg)',
+        backgroundImage: 'url(images/tokyo_ninja_3.jpg)',
         backgroundRepeat: 'no-repeat',
         textAlign:'center',
         backgroundColor: (t) =>
@@ -58,7 +87,7 @@ function Login() {
         backgroundPosition: 'center',
       }}>
       <CssBaseline />
-        <Grid item xs={12} sm={8} md={5} component={Paper} 
+        <Grid item xs={12} sm={8} md={4} component={Paper} 
         sx={{
             backgroundColor:"transparent",
         }}
@@ -90,7 +119,9 @@ function Login() {
                     autoComplete="email"
                     autoFocus
                     variant="filled"
-                    error={emailInputError}
+                    error={formData["email"]?.isError ?? false}
+                    helperText={formData["email"]?.message}
+                    onChange={handleChanged("email",null)}
                     />
                     <TextField
                     margin="normal"
@@ -105,7 +136,9 @@ function Login() {
                     id="password"
                     autoComplete="current-password"
                     variant="filled"
-                    error={passInputError}
+                    error={formData["password"]?.isError ?? false}
+                    helperText={formData["password"]?.message}
+                    onChange={handleChanged("password",null)}
                     />
                     <Button
                     type="submit"
