@@ -19,7 +19,7 @@ const router = Router();
 router.post("/",asyncWrapper(async (req:Request,res:Response<LoginApiResponce>)=>{
     //ユーザー取得
    const user =await usersRepo.selectOne(req.body.email);
-   console.log("access")
+   console.log("ログインを検知")
    if(user===null){
      res.json({
         result:false,

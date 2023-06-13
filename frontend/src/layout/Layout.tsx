@@ -12,8 +12,8 @@ export function Layout() {
     <div className="layout">
         <Header />
         <Routes>
-            <Route path="/" element={<Rooms />} />
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/Rooms" element={<Rooms />} />
+            <Route path="/Chat:roomId" element={<Chat />} />
         </Routes>
     </div>
   )

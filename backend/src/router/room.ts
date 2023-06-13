@@ -3,11 +3,12 @@ import {jwtHelper,MyJwtPayload} from '../services/jwtService'
 import * as roomRepo from '../repository/roomsRepository';
 import * as usersRepo from '../repository/usersRepository';
 import asyncWrapper from '../services/asyncWrapper';
+import { Room } from '@prisma/client';
 const router = Router();
 //=======================================
 //全部屋取得
 //=======================================
-router.get('/all',(req:Request,res:Response)=>{
+router.get('/all',asyncWrapper(async (req:Request,res:Response)=>{
   //認証
   const token=req.cookies.jwtToken;
   const resultObj =jwtHelper.verifyToken(token);
@@ -15,8 +16,8 @@ router.get('/all',(req:Request,res:Response)=>{
     throw new Error("AUTH_FAILED");
   }
   //チャット部屋取得
-  res.json(roomRepo.selectAll());
-})
+  res.json(await roomRepo.selectAll());
+}));
 //=======================================
 //入室
 //=======================================

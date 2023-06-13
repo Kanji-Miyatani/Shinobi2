@@ -15,7 +15,8 @@ export const selectOne=async (id :string | undefined) : Promise<Room | null>=>{
             chats:true,
             users:true
         }
-    })
+    });
+    room?.chats
     return room;
 }
 

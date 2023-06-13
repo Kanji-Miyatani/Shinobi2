@@ -16,7 +16,7 @@ model User {
   ///メールアドレス
   mailaddress String @db.VarChar(50)
    ///パスワード
-  password String @db.VarChar(50)
+  password String @db.VarChar(255)
   ///名前
   name String @db.VarChar(10)
   ///ユーザーのログイン権限

@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.use('/api/auth',authRouter);
 router.use('/api/login',loginRouter);
-router.use('/api/room',roomRouter);
+router.use('/api/rooms',roomRouter);
 router.use('/api/signUp',signUpRouter);
 
 export default router;

@@ -1,10 +1,12 @@
 
-POST http://localhost:3001/api/login HTTP/1.1
-content-type: application/json
+# POST http://localhost:3001/api/login HTTP/1.1
+# content-type: application/json
 
-{
-    "email": "sample",
-    "password": "a"
-}
+# {
+#     "email": "sample",
+#     "password": "a"
+# }
+
+http://localhost:3001/api/rooms/all
 
 
