@@ -6,17 +6,26 @@ import { Layout } from './layout/Layout';
 import Rooms from './components/Rooms';
 import { CookiesProvider } from "react-cookie";
 import Chat from './components/Chat';
+import { useAuthorize } from './services/authService';
+
 
 function App() {
+  const {authorized}=useAuthorize();
   return (
     <div className="App">
       <CookiesProvider>
         <BrowserRouter>
-            <Routes>
-              <Route path="/login" element={ <Login />} />
-              <Route path="/rooms" element={<Rooms />} />
-              <Route path="/chat/:roomId" element={<Chat />} />
-            </Routes>
+          <Routes>
+            {authorized?(
+              <>
+                <Route path="/" element={ <Rooms />} />
+                <Route path="/chat/:roomId" element={<Chat />} />
+              </>
+            ) :(
+              <Route path="/" element={ <Login />} />
+            )}
+            
+          </Routes>
         </BrowserRouter>
       </CookiesProvider>
     </div>
