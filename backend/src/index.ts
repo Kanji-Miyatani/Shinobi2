@@ -13,17 +13,12 @@ initializeDB().then(()=>console.log('DB初期化完了'));
 app.use(express.json());
 //リクエストされたcookieを読み取れるようにする
 app.use(cookieParser());
-//
-app.post('/test',(res:Response,req:Request)=>{
-console.log(res);
-})
-app.get('/',(req:Request,res : Response)=>{
-    res.send( "おはようございます。");
-});
 //APIルーティング
 app.use(router)
 //チャット
-const io = new Server(server);
+const io = new Server(server,{
+    cookie: true
+  });
 socketListen(io);
 
 server.listen(PORT,()=>{

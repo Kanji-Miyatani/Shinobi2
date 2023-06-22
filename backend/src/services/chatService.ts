@@ -1,13 +1,19 @@
-import io,{Server} from 'socket.io'
-import {MyJwtPayload, jwtHelper} from '../services/jwtService'
+import io,{Server} from 'socket.io';
+import { jwtHelper} from '../services/jwtService';
+import { serialize, parse } from "cookie";
 import * as roomRepo from '../repository/roomsRepository';
 import * as usersRepo from '../repository/usersRepository';
+import { ExtendedError } from 'socket.io/dist/namespace';
 const socketListen = (io:Server)=>{
-    
     //認証ミドルウェア(常にjwtを監視する)
     io.use((socket,next)=>{
-        const token = socket.handshake.auth.token;
-        const resultObj =jwtHelper.verifyToken(token);
+        if (!socket.handshake.headers.cookie){
+            next(new Error('AUTH_FAILED'));
+            return
+        } 
+        const token = parse(socket.handshake.headers.cookie);
+        console.log(token);
+        const resultObj =jwtHelper.verifyToken(token["jwtToken"]);
         if(!resultObj.result){
             next(new Error('AUTH_FAILED'));
         }
@@ -15,24 +21,26 @@ const socketListen = (io:Server)=>{
     })
     //接続イベント
     io.on('connection',async(socket)=>{
-        console.log("connected!")
-        //入室処理
-        const token = socket.handshake.auth.token;
-        //IDをjwtトークンから取得
-        const userClaim =jwtHelper.verifyToken(token).decorded as MyJwtPayload;
         //================================
         //入室時
         //================================
-        socket.on('join room',async ()=>{
-            const selectedRoomId = "0";
-            //入室可能かを取得
-            if(!await roomRepo.getCanEnter(selectedRoomId)){
-                throw new Error("CANNOT_ENTRY");
+        socket.on('join room',async (payload)=>{
+            console.log("===========入室処理=============");
+            try{
+
+                console.log(payload);
+                const selectedRoomId = payload.selectedRoomId;
+                //入室可能かを取得
+                if(!await roomRepo.getCanEnter(selectedRoomId)){
+                    throw new Error("CANNOT_ENTRY");
+                }
+                await usersRepo.updateRoom(payload.id,selectedRoomId,socket.id);
+                socket.join(selectedRoomId);
+                //入室時初回データを送信
+                io.to(selectedRoomId).emit("users",await roomRepo.selectOne(selectedRoomId));
+            }catch(e){
+               console.log(e);
             }
-            await usersRepo.updateRoom(userClaim.id,selectedRoomId);
-            socket.join(selectedRoomId);
-            //入室時初回データを送信
-            io.to(selectedRoomId).emit("users",await roomRepo.selectOne(selectedRoomId));
         });
         //================================
         //チャット送信時
@@ -45,14 +53,20 @@ const socketListen = (io:Server)=>{
         //================================
         //退室時
         //================================
-        socket.on('disconnect',async ()=>{
-            //socketのroomsから現在入室している部屋を取得
-            const roomId = Object.keys(socket.rooms).filter(item => item!=socket.id);
-            await usersRepo.updateRoom(userClaim.id,null);
-            io.to(roomId).emit("users",await roomRepo.selectOne(roomId[0]));
-            socket.disconnect();
+        socket.on('disconnect',async (_,next)=>{
+            console.log("===========退室処理=============");
+            try{
+                const userId =await usersRepo.selectIdFromSocketId(socket.id);
+                //socketのroomsから現在入室している部屋を取得
+                const roomId = Object.keys(socket.rooms).filter(item => item!=socket.id);
+                await usersRepo.updateRoom(userId,null,"");
+                io.to(roomId).emit("users",await roomRepo.selectOne(roomId[0]));
+                socket.disconnect();
+            }catch(e){
+                console.log(e);
+            }
         });
-    })
+    });
 }
 
 export default socketListen;

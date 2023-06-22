@@ -23,7 +23,8 @@ model User {
   level AccountLevel @default(Anonymous)
   ///ユーザー作成日
   created_at DateTime  @default(now())
-  
+  ///ソケットID
+  socketId String?
   ///選択キャラクター
   characterId String @default("shinobi")
   selectedCharacter Character  @relation(fields: [characterId], references: [id])

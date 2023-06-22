@@ -8,8 +8,8 @@ export const useSocket = ()=>{
     const [joining,setJoining] = useState(false);
     const [messages,setMessages] =useState();
     //クッキーからjwtトークンの取得
-    const [cookies, setCookie, removeCookie]  =useCookies();
-    const token = cookies["jwt"];
+    const [cookies, setCookie, removeCookie]  =useCookies(["jwtToken"]);
+    const token = cookies["jwtToken"];
     const socket = io(URL ?? "", {
         query: {
           auth: token

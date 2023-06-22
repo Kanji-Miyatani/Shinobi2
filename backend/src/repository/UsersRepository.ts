@@ -1,4 +1,4 @@
-import Prisma, {User,PrismaClient} from '@prisma/client'
+import  {User,PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 
 export const selectAll=async () : Promise<User[]>=>{
@@ -10,10 +10,24 @@ export const selectAll=async () : Promise<User[]>=>{
 export const selectOne=async (email : string | undefined) : Promise<User | null>=>{
     const user = await prisma.user.findFirst({
         where:{
-            mailaddress : email, 
+            mailaddress : email,
         }
     })
     return user;
+}
+export const selectIdFromSocketId=async (socketId:string) : Promise<number>=>{
+    const user = await prisma.user.findFirst({
+        where:{
+            socketId : socketId, 
+        },
+        select:{
+            id:true
+        }
+    })
+    if(user===null){
+       return 0;
+    }
+    return user.id;
 }
 
 export const create=async (
@@ -33,13 +47,14 @@ export const create=async (
     })
 }
 // 部屋更新
-export const updateRoom=async (userId:number,roomId:string |null)=>{
+export const updateRoom=async (userId:number,roomId:string |null,socketId:string)=>{
     await prisma.user.update({
         where:{
             id : userId
         },
         data:{
-            roomId : roomId
+            roomId : roomId,
+            socketId :socketId
         }
       });
 }
