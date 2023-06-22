@@ -24,7 +24,6 @@ export const useSocket = ()=>{
 
     useEffect(()=>{
         const onConnection = ()=>{
-            
         }
     },[]);
 
