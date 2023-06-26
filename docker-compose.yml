@@ -40,7 +40,6 @@ services:
     volumes : 
       - mysql-data:/var/lib/mysql  # volumeのエントリポイント
       - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf  # cnfファイル
-      - ./db/mysql/sql/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql # 起動時に実行するsqlファイル
 volumes:
   mysql-data:
     name: db-data
