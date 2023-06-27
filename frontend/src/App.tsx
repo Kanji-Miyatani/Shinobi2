@@ -6,7 +6,7 @@ import { Layout } from './layout/Layout';
 import Rooms from './components/Rooms';
 import { CookiesProvider } from "react-cookie";
 import Chat from './components/Chat';
-import { useAuthorize } from './services/authService';
+import { useAuthorize } from './hooks/authService';
 
 function App() {
   const {authorized}=useAuthorize();
