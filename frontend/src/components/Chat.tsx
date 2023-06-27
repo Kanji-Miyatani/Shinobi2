@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
-import {  useRoomChat} from '../services/roomChatService';
+import {  useRoomChat} from '../hooks/roomChatService';
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -19,10 +19,13 @@ type Parameter={
 function Chat() {
   const {roomId} = useParams<Parameter>() as Parameter;
   const [inputed,setInputed] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const {isJoining,messages,roomInfo,sendMessage,getUser} = useRoomChat(roomId);
   const handleOnSendButtonClick=()=>{
-    if(inputed==="")return;
+    if(inputed==="" || !inputRef.current)return;
     setInputed("");
+    console.log(inputRef.current.value);
+    inputRef.current.value="";
     sendMessage(inputed);
   };
   return (
@@ -58,7 +61,7 @@ function Chat() {
       {/* <TextField onChange={(event) => setInputed(event.target.value)} id="outlined-basic" label="メッセージ" variant="outlined" /> */}
       <Box sx={{ display: 'inline', alignItems: 'flex-center' }}>
         <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-        <TextField onChange={(event) => setInputed(event.target.value)} id="outlined-basic" label="メッセージ" variant="standard" />
+        <TextField ref={inputRef} onChange={(event) => setInputed(event.target.value)} id="outlined-basic" label="メッセージ" variant="standard" />
       </Box>
       <Button variant="contained" onClick={handleOnSendButtonClick} endIcon={<SendIcon />}>送信</Button>
     </>
