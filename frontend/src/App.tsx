@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import Login from './components/Login';
@@ -7,7 +7,6 @@ import Rooms from './components/Rooms';
 import { CookiesProvider } from "react-cookie";
 import Chat from './components/Chat';
 import { useAuthorize } from './services/authService';
-
 
 function App() {
   const {authorized}=useAuthorize();
@@ -18,11 +17,12 @@ function App() {
           <Routes>
             {authorized?(
               <>
-                <Route path="/" element={ <Rooms />} />
+                <Route path="/" element={ <Login />} />
+                <Route path="/rooms" element={ <Rooms />} />
                 <Route path="/chat/:roomId" element={<Chat />} />
               </>
             ) :(
-              <Route path="/" element={ <Login />} />
+               <Route path="/" element={ <Login />} />
             )}
             
           </Routes>

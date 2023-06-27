@@ -4,8 +4,9 @@ import {useCookies} from 'react-cookie';
 import { Room,User, getOne} from '../api/rooms';
 import { Chat } from '../api/chat';
 import { Socket } from 'dgram';
+import { getURL } from '../api/URL';
 
-const URL = process.env.NODE_ENV === 'production' ? "/" : '/';
+const URL =getURL( process.env.NODE_ENV === 'production' ? "/" : '/');
 const socket =io(URL, {
       
     transports: [ 'websocket' ] 

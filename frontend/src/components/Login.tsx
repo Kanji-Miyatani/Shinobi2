@@ -48,7 +48,6 @@ function Login() {
         const data = new FormData(event.currentTarget);
         const passWord = data.get('password')?.toString();
         const email =data.get('email')?.toString();
-        console.log(formData)
         if(!handleValidateAll()){
             return;
         };
@@ -58,7 +57,7 @@ function Login() {
         } 
         loginApi(req).then((body)=>{
             if(body.result){
-                window.location.reload()
+                navigate('/rooms')
             } else{
                 addError("password",body.message);
             }

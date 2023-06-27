@@ -41,7 +41,7 @@ router.post("/",asyncWrapper(async (req:Request,res:Response<LoginApiResponce>)=
             //webサーバーのみがアクセス可能
             httpOnly: true,
             //cookieの有効期限は2日間に設定
-            expires: dateService.getDaysLater(7),
+            expires: dateService.getDaysLater(2),
         }).json({
             id : user.id,
             result : true,

@@ -10,7 +10,7 @@ function Rooms() {
       setRooms(data);
     }).catch(()=>{
       console.log('failed to get rooms');
-      navigate('/login');
+      navigate('/');
     });
   },[]);
 
