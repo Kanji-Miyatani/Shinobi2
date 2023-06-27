@@ -8,7 +8,7 @@ import { getURL } from '../api/URL';
 
 const URL =getURL( process.env.NODE_ENV === 'production' ? "/" : '/');
 const socket =io(URL, {
-      
+      withCredentials:true,
     transports: [ 'websocket' ] 
   })
 export const useRoomChat = (roomId:string)=>{
