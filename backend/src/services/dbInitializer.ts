@@ -37,6 +37,9 @@ const createUser =async()=>{
     if((await usersRepo.selectAll()).length===0){
         await usersRepo.create("yakan","admin",hashed);
     }
+    if((await usersRepo.selectAll()).length===1){
+        await usersRepo.create("ちんかす男","katsuya",hashed);
+    }
 }
 
 /**

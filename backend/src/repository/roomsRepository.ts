@@ -16,7 +16,6 @@ export const selectOne=async (id :string | undefined) : Promise<Room | null>=>{
             users:true
         }
     });
-    room?.chats
     return room;
 }
 
@@ -40,7 +39,7 @@ export const getCanEnter=async (id :string | undefined) : Promise<boolean>=>{
         }
     });
     if(result){
-        return (result?._count.users as number )> (result?.maximum as number);
+        return (result?._count.users as number )< (result?.maximum as number);
     }
     return false;
 }

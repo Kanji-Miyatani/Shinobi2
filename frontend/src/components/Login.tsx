@@ -58,7 +58,7 @@ function Login() {
         } 
         loginApi(req).then((body)=>{
             if(body.result){
-                navigate("/");
+                window.location.reload()
             } else{
                 addError("password",body.message);
             }

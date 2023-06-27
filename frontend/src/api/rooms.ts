@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { Chat } from './chat';
 export type RoomsApiResponce =Room[];
-   
+export type RoomFetchApiResponce =Room;
 export type Room ={
     id: string
     name: string
@@ -17,12 +18,40 @@ export type Room ={
      */
     maximum: number
     createdAt: Date
+
+    chats:Chat[]
+    users:User[]
 }
-//ログインAPI
+
+
+export type User = {
+     /**
+   * id
+   */
+  id: number
+    /**
+   * 名前
+   */
+  name: string
+  /**
+   * ユーザーのログイン権限
+   */
+  level: string
+  /**
+   * 選択キャラクター
+   */
+  characterId: string
+}
+//部屋取得API
 export const getAll =async():Promise<RoomsApiResponce>=>{
     const result =await axios.get<RoomsApiResponce>('/api/rooms/all');
     
-    console.log("Rooms =====================");
-    console.log(result);
     return result.data;
 }
+
+//入室部屋情報取得API
+export const getOne =async(id:string):Promise<RoomFetchApiResponce>=>{
+    const result =await axios.get<RoomFetchApiResponce>(`/api/rooms/fetch?id=${id}`);
+    return result.data;
+}
+

@@ -1,8 +1,18 @@
 import  {User,PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 
+
 export const selectAll=async () : Promise<User[]>=>{
     const allUsers = await prisma.user.findMany({
+    })
+    return allUsers;
+}
+//任意の部屋に入室中のユーザーをすべて取得
+export const selectInRoom=async (roomId:string) : Promise<User[]>=>{
+    const allUsers = await prisma.user.findMany({
+        where:{
+            roomId : roomId,
+        }
     })
     return allUsers;
 }
