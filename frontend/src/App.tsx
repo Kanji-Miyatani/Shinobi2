@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { createContext} from 'react';
 import './App.css';
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import Login from './components/Login';
@@ -6,26 +6,42 @@ import { Layout } from './layout/Layout';
 import Rooms from './components/Rooms';
 import { CookiesProvider } from "react-cookie";
 import Chat from './components/Chat';
-import { useAuthorize } from './hooks/authService';
+import { useAuthorize } from './hooks/useAuth';
+import { usePersistState } from './hooks/usePersistState';
+
+export const CustomBgImage = createContext({} as {
+  bgImage: string | null
+  setBgImage: (v: string | null) => void
+});
 
 function App() {
+  //チャット背景をグローバルで状態管理
+  const [bgImage,setBgImage] = usePersistState<string|null>({
+    key: "shinobiBG",
+    initialValue: null
+   });
+  const bgState = {
+    bgImage,setBgImage
+  }
   const {authorized}=useAuthorize();
   return (
     <div className="App">
       <CookiesProvider>
         <BrowserRouter>
-          <Routes>
-            {authorized?(
-              <>
-                <Route path="/" element={ <Login />} />
-                <Route path="/rooms" element={ <Rooms />} />
-                <Route path="/chat/:roomId" element={<Chat />} />
-              </>
-            ) :(
-               <Route path="/" element={ <Login />} />
-            )}
-            
-          </Routes>
+          <CustomBgImage.Provider value={bgState}>
+            <Routes>
+              {authorized?(
+                  <>
+                    <Route path="/" element={ <Login />} />
+                    <Route path="/rooms" element={ <Rooms />} />
+                    <Route path="/chat/:roomId" element={<Chat />} />
+                  </>
+                  ) :(
+                  <Route path="/" element={ <Login />} />
+              )}
+              
+            </Routes>
+          </CustomBgImage.Provider>
         </BrowserRouter>
       </CookiesProvider>
     </div>
