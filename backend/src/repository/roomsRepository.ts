@@ -2,6 +2,13 @@ import {Room,PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 export const selectAll=async () : Promise<Room[]>=>{
     const allRooms = await prisma.room.findMany({
+        include:{
+            users:{
+                select:{
+                    _count:true
+                }
+            }
+        }
     })
     return allRooms;
 }
