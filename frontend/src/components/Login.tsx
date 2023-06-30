@@ -13,7 +13,7 @@ import React, { useState } from 'react'
 import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from "react-router-dom";
 import loginApi,{LoginApiRequest} from '../api/login'
-import { ValidationOption, useValidation } from '../hooks/useValidation';
+import { ValidationOption, useValidation } from '../hooks/validationService';
 const validationOptions:ValidationOption[]=[
     {
         name:"email",

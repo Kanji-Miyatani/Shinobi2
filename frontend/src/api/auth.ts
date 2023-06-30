@@ -5,7 +5,8 @@ export type AuthApiResponce ={
 //ログインAPI
 const auth =async():Promise<AuthApiResponce>=>{
     const result =await axios.get<AuthApiResponce>('/api/auth',{
-        withCredentials:true
+        withCredentials:true,
+        
     });
     return result.data;
 }
