@@ -1,6 +1,8 @@
 import React, { useEffect ,useState} from 'react'
 import * as roomsApi from '../api/rooms'
 import { Link, useNavigate } from "react-router-dom";
+import { Badge, } from '@mui/material';
+import People from '@mui/icons-material/People';
 
 function Rooms() {
   const [rooms,setRooms ]=useState<roomsApi.Room[]> ([]);
@@ -23,6 +25,9 @@ function Rooms() {
             return(
               <li key={data.id}>
                 <Link to={'/chat/'+ data.id}>{data.name}</Link>
+                <Badge color="secondary" badgeContent={`${data.users.length}/${data.maximum}`}>
+                  <People />
+                </Badge>
               </li>
             )
           })
