@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { CustomBgImage } from '../App';
+import { Link } from 'react-router-dom';
 type Parameter={
   roomId:string
 }
@@ -22,6 +23,7 @@ function Chat() {
   const {bgImage,setBgImage} = useContext(CustomBgImage);
   const inputRef = useRef<HTMLInputElement>(null);
   const {isJoining,messages,roomInfo,sendMessage,getUser} = useRoomChat(roomId);
+  //送信ボタン
   const handleOnSendButtonClick=()=>{
     if(inputed==="" || !inputRef.current)return;
     setInputed("");
@@ -47,12 +49,17 @@ function Chat() {
     backgroundSize:'cover',
     height:'100vh'
   } 
-  return (
+  
+  return !isJoining?(
+    <>
+      <p>入室中...</p>
+    </>
+  ):(
     <>
      <div style={style}>
 
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'transparent'}}>
-          {messages.map((msg,index)=>{
+          {messages.slice(-6).map((msg,index)=>{
             return (
                 <ListItem alignItems="flex-start" key={index} sx={{backgroundColor:'transparent'}}>
                   <ListItemAvatar>
@@ -81,10 +88,11 @@ function Chat() {
         {/* <TextField onChange={(event) => setInputed(event.target.value)} id="outlined-basic" label="メッセージ" variant="outlined" /> */}
         <Box sx={{ display: 'inline', alignItems: 'flex-center' }}>
           <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-          <TextField ref={inputRef} onChange={(event) => setInputed(event.target.value)} id="outlined-basic" label="メッセージ" variant="standard" />
+          <TextField ref={inputRef} value={inputed} onChange={(event) => setInputed(event.target.value)} id="outlined-basic" label="メッセージ" variant="standard" />
         </Box>
         <Button variant="contained" onClick={handleOnSendButtonClick} endIcon={<SendIcon />}>送信</Button>
         <input type="file" onChange={handleOnChangeFile} />
+       <Link to="/rooms">部屋選択に戻る</Link>
      </div>
     </>
   )

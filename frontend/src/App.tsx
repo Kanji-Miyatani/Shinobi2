@@ -30,15 +30,15 @@ function App() {
         <BrowserRouter>
           <CustomBgImage.Provider value={bgState}>
             <Routes>
-              {authorized?(
+              <Route path="/" element={ <Login />} />
+              <Route path="/rooms" element={ <Rooms />} />
+              <Route path="/chat/:roomId" element={<Chat />} />
+              {/* {authorized?(
                   <>
-                    <Route path="/" element={ <Login />} />
-                    <Route path="/rooms" element={ <Rooms />} />
-                    <Route path="/chat/:roomId" element={<Chat />} />
                   </>
                   ) :(
                   <Route path="/" element={ <Login />} />
-              )}
+              )} */}
               
             </Routes>
           </CustomBgImage.Provider>
