@@ -19,7 +19,6 @@ const router = Router();
 router.post("/",asyncWrapper(async (req:Request,res:Response<LoginApiResponce>)=>{
     //ユーザー取得
    const user =await usersRepo.selectOne(req.body.email);
-   console.log("ログインを検知")
    if(user===null){
      res.json({
         result:false,
@@ -37,11 +36,13 @@ router.post("/",asyncWrapper(async (req:Request,res:Response<LoginApiResponce>)=
             id:user.id,
             name:user.name
         });
+        console.log("ログインを検知")
         res.cookie("jwtToken", jwtToken, {
             //webサーバーのみがアクセス可能
             httpOnly: true,
             //cookieの有効期限は2日間に設定
             expires: dateService.getDaysLater(2),
+
         }).json({
             id : user.id,
             result : true,

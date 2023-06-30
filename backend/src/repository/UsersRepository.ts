@@ -25,6 +25,14 @@ export const selectOne=async (email : string | undefined) : Promise<User | null>
     })
     return user;
 }
+export const selectOneByID=async (id : number ) : Promise<User | null>=>{
+    const user = await prisma.user.findFirst({
+        where:{
+            id : id,
+        }
+    })
+    return user;
+}
 export const selectIdFromSocketId=async (socketId:string) : Promise<number>=>{
     const user = await prisma.user.findFirst({
         where:{
@@ -57,7 +65,7 @@ export const create=async (
     })
 }
 // 部屋更新
-export const updateRoom=async (userId:number,roomId:string |null,socketId:string)=>{
+export const updateRoom=async (userId:number,roomId:string |null,socketId:string|null)=>{
     await prisma.user.update({
         where:{
             id : userId
