@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Chat } from './chat';
 import { getURL } from './URL';
+import { getAxiosSetting } from './axiosSetting';
 export type RoomsApiResponce =Room[];
 export type RoomFetchApiResponce =Room;
 export type Room ={
@@ -45,18 +46,13 @@ export type User = {
 }
 //部屋取得API
 export const getAll =async():Promise<RoomsApiResponce>=>{
-    const result =await axios.get<RoomsApiResponce>(getURL('/api/rooms/all'),{
-        withCredentials:true
-    });
-    
+    const result =await axios.get<RoomsApiResponce>(getURL('/api/rooms/all'),getAxiosSetting());
     return result.data;
 }
 
 //入室部屋情報取得API
 export const getOne =async(id:string):Promise<RoomFetchApiResponce>=>{
-    const result =await axios.get<RoomFetchApiResponce>(getURL(`/api/rooms/fetch?id=${id}`),{
-        withCredentials:true
-    });
+    const result =await axios.get<RoomFetchApiResponce>(getURL(`/api/rooms/fetch?id=${id}`),getAxiosSetting());
     return result.data;
 }
 
