@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env BUILD_PATH='../backend/dist/www' react-scripts build",
+    "build": "BUILD_PATH='../backend/dist/www' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
