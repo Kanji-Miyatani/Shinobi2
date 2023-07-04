@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getURL } from './URL'
+import { getAxiosSetting } from './axiosSetting'
 export type LoginApiRequest ={
     email:string , 
     password:string
@@ -12,9 +13,7 @@ export type LoginApiResponce ={
 }
 //ログインAPI
 const login =async(data:LoginApiRequest):Promise<LoginApiResponce>=>{
-    const result =await axios.post<LoginApiResponce>(getURL('/api/login'),data);
-    //ローカルストレージにセッション保存
-    const jwtToken = result.headers['set-cookie'];
+    const result =await axios.post<LoginApiResponce>(getURL('/api/login'),data,getAxiosSetting());
     return result.data;
 }
 
