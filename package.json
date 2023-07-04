@@ -1,6 +1,22 @@
 {
+  "name": "shinobi2",
+  "version": "1.0.0",
+  "description": "伝説のサーバー「Shinobi」の閉鎖から半年。 後継となる新たなチャットツールの作成に励んでおります。",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build && cd ../backend && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kanji-Miyatani/Shinobi2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kanji-Miyatani/Shinobi2/issues"
+  },
+  "homepage": "https://github.com/Kanji-Miyatani/Shinobi2#readme",
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.2",
     "cross-env": "^7.0.3"
   }
 }
