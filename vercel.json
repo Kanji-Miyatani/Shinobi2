@@ -9,7 +9,7 @@
     "routes": [
       {
         "src": "backend/dist/.*",
-        "dest": "/dist/src/index.js"
+        "dest": "/dist/index.js"
       }
     ],
     "buildCommand": "npm run build"
