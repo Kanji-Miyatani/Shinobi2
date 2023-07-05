@@ -11,10 +11,10 @@ import { initializeDB } from "./services/dbInitializer";
 const app:Application = express();
 const PORT = process.env.PORT ?? 3001;
 //自己SSL証明書を設定
-const server = https.createServer( {
+const server = https.createServer( process.env.ENV === "dev"?{
   key: fs.readFileSync('./cert/privatekey.pem'),
   cert: fs.readFileSync('./cert/cert.pem'),
-},app);
+}:{},app);
 initializeDB().then(()=>console.log('DB初期化完了'));
 //リクエストされたjsonを読み取れるようにする
 app.use(express.json());
@@ -30,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './www/')));
 console.log(__dirname);
 app.get('/',(req:Request,res:Response)=>{
+  console.log('requested html!')
   res.sendFile(path.resolve('./dist/www/index.html'));
 })
 app.use(router)
