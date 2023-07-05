@@ -6,10 +6,9 @@ import signUpRouter from './signUp'
 
 import path from 'path';
 const router = express.Router();
-router.use('/',(req:Request,res:Response)=>{
+router.get('/',(req:Request,res:Response)=>{
     console.log('requested html!');
-    res.send('こんにちは、えくすぷれす。');
-    //res.sendFile(path.join(__dirname, './www/index.html'));
+    res.sendFile(path.join(__dirname, './www/index.html'));
 });
 router.use('/api/auth',authRouter);
 router.use('/api/login',loginRouter);

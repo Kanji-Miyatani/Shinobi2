@@ -8,11 +8,11 @@ const authorize_1 = __importDefault(require("./authorize"));
 const login_1 = __importDefault(require("./login"));
 const room_1 = __importDefault(require("./room"));
 const signUp_1 = __importDefault(require("./signUp"));
+const path_1 = __importDefault(require("path"));
 const router = express_1.default.Router();
-router.use('/', (req, res) => {
+router.get('/', (req, res) => {
     console.log('requested html!');
-    res.send('こんにちは、えくすぷれす。');
-    //res.sendFile(path.join(__dirname, './www/index.html'));
+    res.sendFile(path_1.default.join(__dirname, './www/index.html'));
 });
 router.use('/api/auth', authorize_1.default);
 router.use('/api/login', login_1.default);
