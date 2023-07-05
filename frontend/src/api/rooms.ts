@@ -1,49 +1,9 @@
-import axios from 'axios'
-import { Chat } from './chat';
+import axios from 'axios';
 import { getURL } from './URL';
 import { getAxiosSetting } from './axiosSetting';
-export type RoomsApiResponce =Room[];
-export type RoomFetchApiResponce =Room;
-export type Room ={
-    id: string
-    name: string
-    /**
-     * ユーザーによる作成かどうか
-     */
-    isUserCreated: boolean
-    /**
-     * 使用可能なRoomかどうか
-     */
-    isActive: boolean
-    /**
-     * 最大人数
-     */
-    maximum: number
-    createdAt: Date
-
-    chats:Chat[]
-    users:User[]
-}
+import { RoomFetchApiResponce, RoomsApiResponce } from '../interfaces/apiReqRes';
 
 
-export type User = {
-     /**
-   * id
-   */
-  id: number
-    /**
-   * 名前
-   */
-  name: string
-  /**
-   * ユーザーのログイン権限
-   */
-  level: string
-  /**
-   * 選択キャラクター
-   */
-  characterId: string
-}
 //部屋取得API
 export const getAll =async():Promise<RoomsApiResponce>=>{
     const result =await axios.get<RoomsApiResponce>(getURL('/api/rooms/all'),getAxiosSetting());

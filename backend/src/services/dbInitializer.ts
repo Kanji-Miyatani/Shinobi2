@@ -55,10 +55,27 @@ const createRooms =async()=>{
             isUserCreated:false,
             maximum:10
         },
+        {
+            id : "univ-hyougo",
+            name:"兵庫県立大学",
+            createdAt:new Date(),
+            isActive :true,
+            isUserCreated:false,
+            maximum:15
+        },
+        {
+            id : "tokyo-sinjuku",
+            name:"新宿東京",
+            createdAt:new Date(),
+            isActive :true,
+            isUserCreated:false,
+            maximum:10
+        },
     ] ;
-    if((await roomsRepo.selectAll()).length===0){
-       rooms.map(async (data)=>{
-         await roomsRepo.create(data);
-       }) 
-    }
+    const roomsRegisted = await roomsRepo.selectAll()
+    rooms.map(async (data)=>{
+        if(roomsRegisted.filter(x=>x.id===data.id).length===0)
+        await roomsRepo.create(data);
+    }) 
+    
 }

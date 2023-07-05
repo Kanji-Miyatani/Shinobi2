@@ -3,9 +3,10 @@ import * as roomsApi from '../api/rooms'
 import { Link, useNavigate } from "react-router-dom";
 import { Badge, } from '@mui/material';
 import People from '@mui/icons-material/People';
+import { Room } from '../interfaces/models';
 
 function Rooms() {
-  const [rooms,setRooms ]=useState<roomsApi.Room[]> ([]);
+  const [rooms,setRooms ]=useState<Room[]> ([]);
   const navigate = useNavigate();
   useEffect(()=>{
     roomsApi.getAll().then((data)=>{

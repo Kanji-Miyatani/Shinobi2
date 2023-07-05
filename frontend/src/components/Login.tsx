@@ -12,8 +12,9 @@ import { Avatar,
 import React, { useState } from 'react'
 import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from "react-router-dom";
-import loginApi,{LoginApiRequest} from '../api/login'
+import loginApi from '../api/login';
 import { ValidationOption, useValidation } from '../hooks/validationService';
+import { LoginApiRequest } from '../interfaces/apiReqRes';
 const validationOptions:ValidationOption[]=[
     {
         name:"email",

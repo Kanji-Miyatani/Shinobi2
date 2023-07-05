@@ -19,7 +19,6 @@ export const selectOne=async (id :string | undefined) : Promise<Room | null>=>{
             id : id, 
         },
         include:{
-            chats:true,
             users:true
         }
     });

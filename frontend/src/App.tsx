@@ -23,7 +23,6 @@ function App() {
   const bgState = {
     bgImage,setBgImage
   }
-  const {authorized}=useAuthorize();
   return (
     <div className="App">
       <CookiesProvider>
@@ -33,13 +32,6 @@ function App() {
               <Route path="/" element={ <Login />} />
               <Route path="/rooms" element={ <Rooms />} />
               <Route path="/chat/:roomId" element={<Chat />} />
-              {/* {authorized?(
-                  <>
-                  </>
-                  ) :(
-                  <Route path="/" element={ <Login />} />
-              )} */}
-              
             </Routes>
           </CustomBgImage.Provider>
         </BrowserRouter>

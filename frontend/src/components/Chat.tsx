@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { CustomBgImage } from '../App';
 import { Link } from 'react-router-dom';
+import { Chip } from '@mui/material';
 type Parameter={
   roomId:string
 }
@@ -57,7 +58,18 @@ function Chat() {
   ):(
     <>
      <div style={style}>
-
+        {
+          roomInfo.users.map((user,index)=>(
+            <Chip
+              key={index}
+              label={user.name}
+              component="a"
+              href="#basic-chip"
+              variant="outlined"
+              clickable
+            />
+          ))
+        }
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'transparent'}}>
           {messages.slice(-6).map((msg,index)=>{
             return (
@@ -66,7 +78,7 @@ function Chat() {
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                   </ListItemAvatar>
                   <ListItemText
-                    primary= {getUser(msg.userId).name}
+                    primary= {msg.user.name}
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -75,7 +87,6 @@ function Chat() {
                           variant="body2"
                           color="text.primary"
                         >
-                        
                         </Typography>
                         {msg.message}
                       </React.Fragment>//UIの参考(MUI使って作ってるけど、好きなCSS入れていいよ)＝＞https://mui.com/material-ui/react-list/　みマウス

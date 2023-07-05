@@ -73,7 +73,10 @@ const socketListen = (io:Server)=>{
                 const chatEmittiing :MessageToSend={
                     createdAt :new Date(),
                     message:message,
-                    userId:claim.id 
+                    user:{
+                        id:claim.id,
+                        name:claim.name
+                    }
                 }
                 await chatRepo.create(sender.roomId,chatEmittiing);
                 

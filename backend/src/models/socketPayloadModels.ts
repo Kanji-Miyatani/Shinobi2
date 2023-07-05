@@ -1,6 +1,10 @@
+import { User } from "@prisma/client"
+
 export type MessageToSend ={
     createdAt:Date
     message:string
-    userId:number
-    
+    user:{
+        id:number
+        name:string
+    }
 }

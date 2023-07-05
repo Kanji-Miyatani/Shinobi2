@@ -1,6 +1,7 @@
 import {Router,Response,Request, NextFunction} from 'express'
 import {jwtHelper} from '../services/jwtService'
 import * as roomRepo from '../repository/roomsRepository';
+import * as chatRepo from '../repository/chatRepository';
 import asyncWrapper from '../services/asyncWrapper';
 const router = Router();
 //=======================================
@@ -33,6 +34,9 @@ router.get('/fetch',asyncWrapper(async (req:Request,res:Response,next:NextFuncti
     throw new Error("AUTH_FAILED");
   }
   //チャット部屋取得
-  res.json(await roomRepo.selectOne(req.query.id.toString()));
+  res.json({
+    room:await roomRepo.selectOne(req.query.id.toString()),
+    chats:await chatRepo.selectOnRoom(req.query.id.toString())
+  });
 }));
 export default router;
