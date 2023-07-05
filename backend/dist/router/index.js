@@ -10,13 +10,13 @@ const room_1 = __importDefault(require("./room"));
 const signUp_1 = __importDefault(require("./signUp"));
 const path_1 = __importDefault(require("path"));
 const router = express_1.default.Router();
-router.get('/', (req, res) => {
-    console.log('requested html!');
-    res.sendFile(path_1.default.join(__dirname, './www/index.html'));
-});
 router.use('/api/auth', authorize_1.default);
 router.use('/api/login', login_1.default);
 router.use('/api/rooms', room_1.default);
 router.use('/api/signUp', signUp_1.default);
+router.use('/', (req, res) => {
+    console.log('requested html!');
+    res.sendFile(path_1.default.join(__dirname, '../www/index.html'));
+});
 exports.default = router;
 //# sourceMappingURL=index.js.map

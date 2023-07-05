@@ -6,13 +6,13 @@ import signUpRouter from './signUp'
 
 import path from 'path';
 const router = express.Router();
-router.get('/',(req:Request,res:Response)=>{
-    console.log('requested html!');
-    res.sendFile(path.join(__dirname, './www/index.html'));
-});
 router.use('/api/auth',authRouter);
 router.use('/api/login',loginRouter);
 router.use('/api/rooms',roomRouter);
 router.use('/api/signUp',signUpRouter);
+router.use('/',(req:Request,res:Response)=>{
+    console.log('requested html!');
+    res.sendFile(path.join(__dirname, '../www/index.html'));
+});
 
 export default router;
