@@ -9,7 +9,7 @@ import path from 'path';
 import socketListen from './services/chatService'
 import { initializeDB } from "./services/dbInitializer";
 const app:Application = express();
-const PORT = 3001;
+const PORT = process.env.PORT ?? 3001;
 //自己SSL証明書を設定
 const server = https.createServer( {
   key: fs.readFileSync('./cert/privatekey.pem'),
