@@ -1,6 +1,7 @@
 import express, { Application, Request, Response }  from "express";
 import cookieParser from "cookie-parser";
-import https from 'https'
+import http from 'http';
+import https from 'https';
 import {Server} from 'socket.io'
 import router from './router/index'
 import cors from 'cors';
@@ -11,10 +12,11 @@ import { initializeDB } from "./services/dbInitializer";
 const app:Application = express();
 const PORT = process.env.PORT ?? 3001;
 //自己SSL証明書を設定
-const server = https.createServer( process.env.ENV === "dev"?{
+const server =process.env.ENV ==="dev"?  https.createServer({
   key: fs.readFileSync('./cert/privatekey.pem'),
   cert: fs.readFileSync('./cert/cert.pem'),
-}:{},app);
+},app):
+http.createServer(app);
 initializeDB().then(()=>console.log('DB初期化完了'));
 //リクエストされたjsonを読み取れるようにする
 app.use(express.json());
@@ -29,10 +31,6 @@ app.use(cookieParser());
 //APIルーティング
 app.use(express.static(path.join(__dirname, './www/')));
 console.log(__dirname);
-app.get('/',(req:Request,res:Response)=>{
-  console.log('requested html!')
-  res.sendFile(path.resolve('./dist/www/index.html'));
-})
 app.use(router)
 
 //チャット

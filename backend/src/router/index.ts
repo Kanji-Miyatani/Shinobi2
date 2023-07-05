@@ -4,9 +4,13 @@ import loginRouter from './login'
 import roomRouter from './room'
 import signUpRouter from './signUp'
 
-
+import path from 'path';
 const router = express.Router();
-
+router.use('/',(req:Request,res:Response)=>{
+    console.log('requested html!');
+    res.send('こんにちは、えくすぷれす。');
+    //res.sendFile(path.join(__dirname, './www/index.html'));
+});
 router.use('/api/auth',authRouter);
 router.use('/api/login',loginRouter);
 router.use('/api/rooms',roomRouter);
