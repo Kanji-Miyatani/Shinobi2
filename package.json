@@ -4,7 +4,7 @@
   "description": "伝説のサーバー「Shinobi」の閉鎖から半年。 後継となる新たなチャットツールの作成に励んでおります。",
   "main": "index.js",
   "scripts": {
-    "build": "echo 'BUilding all...' && npm install && cd frontend && npm install && npm run build && cd ../backend && npm run build"
+    "build": "echo 'BUilding all...' && npm install && cd frontend && npm install && npm run build && cd ../backend && npm run build && npm run serve"
   },
   "repository": {
     "type": "git",

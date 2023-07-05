@@ -1,15 +1,10 @@
 {
     "version": 2,
-    "builds": [
-        {
-          "src": "index.js",
-          "use": "@now/node"
-        }
-      ],
-      "routes": [
-        {
-          "src": "backend/dist/(.*)",
-          "dest": "index.js"
-        }
-    ]
+    "routes": [
+      {
+        "src": "backend/dist/.*",
+        "dest": "/dist/index.js"
+      }
+    ],
+    "buildCommand": "npm run build"
   }
