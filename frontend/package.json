@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "set BUILD_PATH='../backend/dist/www' react-scripts build",
+    "build": "cross-env BUILD_PATH=../backend/dist/www REACT_APP_APIURL=/ && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
