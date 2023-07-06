@@ -61,6 +61,7 @@ export const useRoomChat = (roomId:string)=>{
             });
             //メッセージ受信処理
             socket.on("message",(message:Chat)=>{
+                message.createdAt=new Date(message.createdAt);
                 setMessages((messages)=>[...messages,message]);
             });
             //入室完了

@@ -40,6 +40,9 @@ const createUser =async()=>{
     if((await usersRepo.selectAll()).length===1){
         await usersRepo.create("ちんかす男","katsuya",hashed);
     }
+    if((await usersRepo.selectAll()).length===3){
+        await usersRepo.create("APEX世界一位","toru",hashed);
+    }
 }
 
 /**

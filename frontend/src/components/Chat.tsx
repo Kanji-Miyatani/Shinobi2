@@ -71,11 +71,11 @@ function Chat() {
         }
         <List sx={{ width: '100%', maxWidth: 360, maxHeight:500,overflow:'auto',bgcolor: 'transparent'}}>
           {messages.slice(-20).map((msg,index)=>{
-                      console.log(msg.createdAt);
+                      console.log(msg.createdAt.getTime());
             return (
                 <ListItem alignItems="flex-start" key={index} sx={{backgroundColor:'transparent'}}>
                   <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src={`/images/avatar/${msg.user.characterId}.jpg`} />
+                    <Avatar alt={msg.user.name} src={`/images/avatar/${msg.user.characterId}.svg`} />
                   </ListItemAvatar>
                   <ListItemText
                     primary= {msg.user.name}
@@ -86,11 +86,13 @@ function Chat() {
                           component="span"
                           variant="body2"
                           color="text.primary"
-                        >
+                          >
+                          {msg.message}
                         </Typography>
-                        {msg.message}
+                        <br /><small>{msg.createdAt.toLocaleDateString()}{" "}{msg.createdAt.toLocaleTimeString()}</small>
                       </React.Fragment>//UIの参考(MUI使って作ってるけど、好きなCSS入れていいよ)＝＞https://mui.com/material-ui/react-list/　みマウス
                     }
+                    
                   />
                 </ListItem>
             );

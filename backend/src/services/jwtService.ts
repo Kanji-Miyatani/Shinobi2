@@ -11,7 +11,7 @@ export interface MyJwtPayload{
 }
 export class jwtHelper {
 　//秘密鍵
-  static jweSecret = "tR8MRZ5Lnswv";
+  static jweSecret = process.env.JWT_SECRET ?? "tR8MRZ5Lnswv";
   //トークン生成
   static createToken(payload:MyJwtPayload) {
     const token = jwt.sign(payload, this.jweSecret, {
