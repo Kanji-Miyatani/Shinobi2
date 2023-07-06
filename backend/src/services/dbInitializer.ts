@@ -12,7 +12,7 @@ export const initializeDB = async ()=>{
  * 初期キャラ作成
  */
 const createCharacters =async()=>{
-    if((await characterRepo.selectAll()).length!==0){
+    if((await characterRepo.selectAll()).length>=2){
         return;
     }
     const characters : Array<Character> = [
@@ -20,6 +20,11 @@ const createCharacters =async()=>{
             id : "shinobi",
             imgCode : "shinobi",
             name:"シノビ"
+        },
+        {
+            id : "unset",
+            imgCode : "unset",
+            name:""
         },
     ] ;
     characters.map(async (character)=>{
@@ -31,9 +36,7 @@ const createCharacters =async()=>{
  */
 const createUser =async()=>{
     const hashed =await bcrypt.hash("adminadmin",10);
-    console.log("ハッシュ値＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝")
-    console.log(hashed);
-    console.log("ハッシュ値＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝")
+  
     if((await usersRepo.selectAll()).length===0){
         await usersRepo.create("yakan","admin",hashed);
     }
@@ -78,7 +81,9 @@ const createRooms =async()=>{
     const roomsRegisted = await roomsRepo.selectAll()
     rooms.map(async (data)=>{
         if(roomsRegisted.filter(x=>x.id===data.id).length===0)
-        await roomsRepo.create(data);
+        {
+            await roomsRepo.create(data);
+        }
     }) 
     
 }

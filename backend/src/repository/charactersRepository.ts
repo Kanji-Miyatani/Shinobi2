@@ -2,7 +2,7 @@ import {Character,PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 export const selectAll=async () : Promise<Character[]>=>{
     const allCharacters = await prisma.character.findMany({
-    })
+    });
     return allCharacters;
 }
 

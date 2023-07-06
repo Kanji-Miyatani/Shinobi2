@@ -1,4 +1,4 @@
-import  {User,PrismaClient} from '@prisma/client'
+import  Prisma,{User,PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 
 
@@ -63,6 +63,18 @@ export const create=async (
         }
         
     })
+}
+export const update=async (
+   id:number,charaId:string
+    )=>{
+    await prisma.user.update({
+        where: {
+          id:id
+        },
+        data: {
+          characterId:charaId
+        },
+      });
 }
 // 部屋更新
 export const updateRoom=async (userId:number,roomId:string |null,socketId:string|null)=>{

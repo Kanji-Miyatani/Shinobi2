@@ -19,6 +19,7 @@ type Parameter={
   roomId:string
 }
 function Chat() {
+  const scrollBottomRef = useRef<HTMLDListElement>(null);
   const {roomId} = useParams<Parameter>() as Parameter;
   const [inputed,setInputed] = useState("");
   const {bgImage,setBgImage} = useContext(CustomBgImage);
