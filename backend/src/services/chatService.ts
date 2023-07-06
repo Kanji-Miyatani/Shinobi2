@@ -75,7 +75,8 @@ const socketListen = (io:Server)=>{
                     message:message,
                     user:{
                         id:claim.id,
-                        name:claim.name
+                        name:claim.name,
+                        characterId:sender.characterId
                     }
                 }
                 await chatRepo.create(sender.roomId,chatEmittiing);

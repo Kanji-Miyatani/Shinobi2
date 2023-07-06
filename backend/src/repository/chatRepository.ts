@@ -17,7 +17,7 @@ export const selectOnRoom=async (roomId :string):Promise<MessageToSend[]>=>{
         orderBy:{
             createdAt:"desc"
         },
-        take: 100,
+        take: 40,
         where:{
             roomId : roomId, 
         },
@@ -31,7 +31,8 @@ export const selectOnRoom=async (roomId :string):Promise<MessageToSend[]>=>{
             message: chat.message,
             user: {
                 id: chat.userId,
-                name: chat.user?.name ?? ""
+                name: chat.user?.name ?? "",
+                characterId:chat.user?.characterId ?? "shinobi"
             }
         }
     })

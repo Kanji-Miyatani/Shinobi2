@@ -64,18 +64,18 @@ function Chat() {
               key={index}
               label={user.name}
               component="a"
-              href="#basic-chip"
               variant="outlined"
               clickable
             />
           ))
         }
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'transparent'}}>
-          {messages.slice(-6).map((msg,index)=>{
+        <List sx={{ width: '100%', maxWidth: 360, maxHeight:500,overflow:'auto',bgcolor: 'transparent'}}>
+          {messages.reverse().slice(-20).map((msg,index)=>{
+                      console.log(msg.createdAt);
             return (
                 <ListItem alignItems="flex-start" key={index} sx={{backgroundColor:'transparent'}}>
                   <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                    <Avatar alt="Remy Sharp" src={`/images/avatar/${msg.user.characterId}.jpg`} />
                   </ListItemAvatar>
                   <ListItemText
                     primary= {msg.user.name}
