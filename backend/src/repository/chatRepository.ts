@@ -25,7 +25,7 @@ export const selectOnRoom=async (roomId :string):Promise<MessageToSend[]>=>{
             user:true
         }
     });
-    return data.map((chat):MessageToSend=>{
+    return data.sort((x,y)=>x.createdAt.getTime()-y.createdAt.getTime() ).map((chat):MessageToSend=>{
         return{
             createdAt: chat.createdAt,
             message: chat.message,

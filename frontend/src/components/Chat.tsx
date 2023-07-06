@@ -70,7 +70,7 @@ function Chat() {
           ))
         }
         <List sx={{ width: '100%', maxWidth: 360, maxHeight:500,overflow:'auto',bgcolor: 'transparent'}}>
-          {messages.reverse().slice(-20).map((msg,index)=>{
+          {messages.slice(-20).map((msg,index)=>{
                       console.log(msg.createdAt);
             return (
                 <ListItem alignItems="flex-start" key={index} sx={{backgroundColor:'transparent'}}>
