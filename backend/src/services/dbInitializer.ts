@@ -38,13 +38,16 @@ const createUser =async()=>{
     const hashed =await bcrypt.hash("adminadmin",10);
   
     if((await usersRepo.selectAll()).length===0){
-        await usersRepo.create("yakan","admin",hashed);
+        await usersRepo.create("yakan","admin",hashed,"shinobi");
     }
     if((await usersRepo.selectAll()).length===1){
-        await usersRepo.create("ちんかす男","katsuya",hashed);
+        await usersRepo.create("ちんかす男","katsuya",hashed,"unset");
+    }
+    if((await usersRepo.selectAll()).length===2){
+        await usersRepo.create("ちんかす男","katsuya",hashed,"unset");
     }
     if((await usersRepo.selectAll()).length===3){
-        await usersRepo.create("APEX世界一位","toru",hashed);
+        await usersRepo.create("APEX世界一位","toru",hashed,"unset");
     }
 }
 

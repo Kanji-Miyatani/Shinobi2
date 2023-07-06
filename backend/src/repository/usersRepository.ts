@@ -52,6 +52,7 @@ export const create=async (
     name:string,
     email:string,
     pass:string,
+    characterId:string
     )=>{
     await prisma.user.create({
         data: {
@@ -59,7 +60,7 @@ export const create=async (
             password:pass,
             created_at:new Date(),
             mailaddress:email,
-            characterId:"shinobi"//デフォルトキャラ
+            characterId:characterId
         }
         
     })

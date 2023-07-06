@@ -12,7 +12,7 @@ router.post('/',asyncWrapper( async (req:Request,res:Response)=>{
     const passHashed =await bcrypt.hash(body.password as string,10);
     //ユーザー追加
     await usersRepo.create(
-         body.name,body.mailaddress ,passHashed
+         body.name,body.mailaddress ,passHashed,'unset'
     );
     res.json({
         result:true
